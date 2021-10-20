@@ -89,6 +89,49 @@ Node* inorder_successor(Node* root, int x)
 		return successor;
 	}
 }
+
+Node* inorder_predecessor_naive(Node* root, int x)
+{
+	std::vector<Node*> v;
+	inorder_traversal(root, v);
+	int i = bin_search(x, v, 0, v.size() - 1);
+	if (i == 0) return NULL;
+	return v[i - 1];
+}
+
+Node* FindMax(Node* root)
+{
+	if (!root->right) return root;
+	return FindMax(root->right);
+}
+Node* inorder_predecessor(Node* root, int x)
+{
+	Node* n = FindNode(root, x);
+
+	// if left subtree exists, then the inorder pred
+	// is the max node in the left subtree
+	if (n->left) return FindMax(n->left);
+
+	else
+	{
+		// the nearest ancestor to whom the curr node lies rightwards
+		Node* predecessor = NULL;
+		Node* ancestor = root;
+
+		while (ancestor != n)
+		{
+			if (x > ancestor->data)
+			{
+				predecessor = ancestor;
+				ancestor = ancestor->right;
+			}
+			else ancestor = ancestor->left;
+		}
+		return predecessor;
+	}
+}
+
+
 int main()
 {
 	Node* root = NULL;
@@ -104,14 +147,17 @@ int main()
 	Insert(root, 16);
 	Insert(root, 18);
 
-	std::cout << inorder_successor(root, 12)->data << std::endl;
-	std::cout << inorder_successor_naive(root, 12)->data << std::endl;
-	std::cout << inorder_successor(root, 3)->data << std::endl;
-	std::cout << inorder_successor_naive(root, 3)->data << std::endl;
-	std::cout << inorder_successor(root, 13)->data << std::endl;
-	std::cout << inorder_successor_naive(root, 13)->data << std::endl;
-	std::cout << inorder_successor(root, 5)->data << std::endl;
-	std::cout << inorder_successor_naive(root, 5)->data << std::endl;
+	std::cout << 12<< ": " << inorder_successor(root, 12)->data << " " << inorder_successor_naive(root, 12)->data << std::endl;
+	std::cout << 3 <<": " << inorder_successor(root, 3)->data << " " << inorder_successor_naive(root, 3)->data << std::endl;
+	std::cout << 13<<": "  << inorder_successor(root, 13)->data << " " << inorder_successor_naive(root, 13)->data << std::endl;
+	std::cout << 5<< ": " << inorder_successor(root, 5)->data << " " << inorder_successor_naive(root, 5)->data << std::endl;
+	
+	std::cout << std::endl;
+
+	std::cout << 12<< ": " << inorder_predecessor(root, 12)->data << " " << inorder_predecessor_naive(root, 12)->data << std::endl;
+	std::cout << 3<< ": " << inorder_predecessor(root, 3)->data << " " << inorder_predecessor_naive(root, 3)->data << std::endl;
+	std::cout << 13<< ": " << inorder_predecessor(root, 13)->data << " " << inorder_predecessor_naive(root, 13)->data << std::endl;
+	std::cout << 5<< ": " << inorder_predecessor(root, 15)->data << " " << inorder_predecessor_naive(root, 5)->data << std::endl;
 
 	return 0;
 

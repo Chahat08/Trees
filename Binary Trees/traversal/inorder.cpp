@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 
 struct Node
 {
@@ -25,7 +26,6 @@ void inorder_traversal(Node* root)
 	std::cout << root->data << " ";
 	inorder_traversal(root->right);
 }
-
 int main()
 {
 	Node* root = NULL;

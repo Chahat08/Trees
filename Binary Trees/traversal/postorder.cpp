@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stack>
+
 struct Node
 {
 	int data;
@@ -26,7 +28,6 @@ void postorder_traversal(Node* root)
 	postorder_traversal(root->right);
 	std::cout << root->data << " ";
 }
-
 int main()
 {
 	Node* root = NULL;
