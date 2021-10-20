@@ -114,7 +114,7 @@ Node* inorder_predecessor(Node* root, int x)
 
 	else
 	{
-		// the nearest ancestor to whom the curr node lies rightwards
+		// the nearest ancestor to whom the curr node lies rightwards (wrt it)
 		Node* predecessor = NULL;
 		Node* ancestor = root;
 
